@@ -42,4 +42,4 @@ Route::get('set-offline', 'UsersController@setOffline');
 
 Route::any('/webhook', function(\Illuminate\Http\Request $request){
     Log::info('teste', $request->all());
-});
+})->name('webhook');
