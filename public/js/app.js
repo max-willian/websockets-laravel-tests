@@ -1963,11 +1963,7 @@ __webpack_require__.r(__webpack_exports__);
       Echo.join('presence-chat').whisper('typing', this.user);
     },
     beforeUnload: function beforeUnload() {
-      alert('Adeus');
-      axios.post('chat/webhook', {
-        user: this.user
-      });
-      Echo.leaveChannel('presence-chat');
+      console.log('saindo');
     }
   }
 });
@@ -60080,9 +60076,14 @@ if (token) {
 
 
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
+console.log("anyKey");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "anyKey",
+  key: 'f064e552909017a4ecd2',
+  //only prod
+  // key: process.env.MIX_PUSHER_APP_KEY,
+  cluster: 'us2',
+  //only prod
   forceTLS: true //only prod
   // wsHost: window.location.hostname,
   // wsPort: 6001,

@@ -105,9 +105,7 @@
                     .whisper('typing', this.user);
             },
             beforeUnload(){
-                alert('Adeus');
-                axios.post('chat/webhook', { user: this.user });
-                Echo.leaveChannel('presence-chat');
+                console.log('saindo');
             }
         }
     }

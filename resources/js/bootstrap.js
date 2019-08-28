@@ -47,9 +47,13 @@ import Echo from 'laravel-echo';
 
 window.Pusher = require('pusher-js');
 
+console.log(process.env.MIX_PUSHER_APP_KEY);
+
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
+    key: 'f064e552909017a4ecd2', //only prod
+    // key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: 'us2', //only prod
     forceTLS: true //only prod
     // wsHost: window.location.hostname,
     // wsPort: 6001,
