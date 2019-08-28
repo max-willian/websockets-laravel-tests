@@ -47,9 +47,6 @@ import Echo from 'laravel-echo';
 
 window.Pusher = require('pusher-js');
 
-console.log(process.env.MIX_PUSHER_APP_KEY);
-console.log(process.env.MIX_PUSHER_AUTH_ENDPOINT);
-
 window.Echo = new Echo({
     // authEndpoint : 'http://177.71.197.207/websockets-laravel-tests/broadcasting/auth', //only prod
     authEndpoint : process.env.MIX_PUSHER_AUTH_ENDPOINT, //only prod

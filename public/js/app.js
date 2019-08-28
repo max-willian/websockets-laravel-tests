@@ -60076,11 +60076,9 @@ if (token) {
 
 
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
-console.log("f064e552909017a4ecd2");
-console.log("http://177.71.197.207/websockets-laravel-tests/broadcasting/auth");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   // authEndpoint : 'http://177.71.197.207/websockets-laravel-tests/broadcasting/auth', //only prod
-  authEndpoint: "http://177.71.197.207/websockets-laravel-tests/broadcasting/auth",
+  authEndpoint: "http://127.0.0.1:8000/broadcasting/auth",
   //only prod
   broadcaster: 'pusher',
   // key: 'f064e552909017a4ecd2', //only prod
