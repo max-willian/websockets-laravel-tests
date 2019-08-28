@@ -2011,12 +2011,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   data: function data() {
     return {
       orders: [],
-      time: new Date().getTime()
+      time: new Date().getTime(),
+      selectedOrder: {}
     };
   },
   created: function created() {
@@ -2039,10 +2043,13 @@ __webpack_require__.r(__webpack_exports__);
         _this2.orders = response.data;
       });
     },
+    open: function open(order) {
+      this.selectedOrder = order;
+    },
     setOnline: function setOnline() {
       axios.get('set-online?t=' + this.time);
     },
-    beforeUnload: function beforeUnload(e) {
+    beforeUnload: function beforeUnload() {
       axios.get('set-offline?t=' + this.time);
     }
   }
@@ -47780,19 +47787,32 @@ var render = function() {
             _vm._l(_vm.orders, function(order, index) {
               return _c("li", { key: index, staticClass: "p-2" }, [
                 _c(
-                  "div",
+                  "a",
                   {
-                    staticClass: "alert alert-primary",
-                    attrs: { role: "alert" }
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.open(order)
+                      }
+                    }
                   },
                   [
-                    _c("strong", [
-                      _vm._v(
-                        _vm._s(order.description) +
-                          " - R$ " +
-                          _vm._s(order.value)
-                      )
-                    ])
+                    _c(
+                      "div",
+                      {
+                        staticClass: "alert alert-primary",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _c("strong", [
+                          _vm._v(
+                            _vm._s(order.description) +
+                              " - R$ " +
+                              _vm._s(order.value)
+                          )
+                        ])
+                      ]
+                    )
                   ]
                 )
               ])
@@ -47803,23 +47823,22 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-8" }, [
+    _c("div", { staticClass: "col-8" }, [
       _c("div", { staticClass: "card card-default" }, [
         _c("div", { staticClass: "card-header" }, [_vm._v("Order Details")]),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body" })
+        _c("div", { staticClass: "card-body" }, [
+          _c("h1", [_vm._v(_vm._s(this.selectedOrder.description))]),
+          _vm._v(" "),
+          this.selectedOrder.value
+            ? _c("h3", [_vm._v("R$ " + _vm._s(this.selectedOrder.value))])
+            : _vm._e()
+        ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
