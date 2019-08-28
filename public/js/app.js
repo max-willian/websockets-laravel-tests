@@ -2015,13 +2015,15 @@ __webpack_require__.r(__webpack_exports__);
   props: ['user'],
   data: function data() {
     return {
-      orders: []
+      orders: [],
+      time: new Date().getTime()
     };
   },
   created: function created() {
     var _this = this;
 
     this.fetchMessages();
+    this.setOnline();
     window.addEventListener('beforeunload', this.beforeUnload);
     Echo["private"]('new-order.' + this.user.id).listen('NewOrder', function (event) {
       console.log(event);
@@ -2033,16 +2035,15 @@ __webpack_require__.r(__webpack_exports__);
     fetchMessages: function fetchMessages() {
       var _this2 = this;
 
-      axios.get('fetch-orders').then(function (response) {
+      axios.get('fetch-orders?t=' + this.time).then(function (response) {
         _this2.orders = response.data;
       });
     },
-    beforeUnload: function beforeUnload() {
-      alert('Adeus');
-      axios.post('chat/webhook', {
-        user: this.user
-      });
-      Echo.leaveChannel('presence-chat');
+    setOnline: function setOnline() {
+      axios.get('set-online?t=' + this.time);
+    },
+    beforeUnload: function beforeUnload(e) {
+      axios.get('set-offline?t=' + this.time);
     }
   }
 });

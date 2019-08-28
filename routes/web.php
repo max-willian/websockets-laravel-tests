@@ -22,9 +22,6 @@ Route::get('/', function () {
 });
 
 Route::get('/chats', 'ChatsController@index');
-Route::post('/chat/webhook', function(\Illuminate\Http\Request $request){
-    Log::info('teste', $request->all());
-});
 
 Route::get('/messages', 'ChatsController@fetchMessages');
 Route::post('/messages', 'ChatsController@sendMessage');
@@ -37,3 +34,8 @@ Route::get('order/new', 'OrdersController@newOrder');
 
 Route::get('orders', 'OrdersController@index');
 Route::get('fetch-orders', 'OrdersController@fetchOrders');
+
+Route::get('online-users', 'UsersController@onlineUsers');
+
+Route::get('set-online', 'UsersController@setOnline');
+Route::get('set-offline', 'UsersController@setOffline');

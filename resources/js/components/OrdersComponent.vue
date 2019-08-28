@@ -29,14 +29,15 @@
 <script>
     export default {
         props: ['user'],
-
         data() {
             return {
-                orders: []
+                orders: [],
+                time: new Date().getTime()
             }
         },
         created(){
             this.fetchMessages();
+            this.setOnline();
 
             window.addEventListener('beforeunload', this.beforeUnload);
 
@@ -48,14 +49,15 @@
         },
         methods: {
             fetchMessages() {
-                axios.get('fetch-orders').then(response => {
+                axios.get('fetch-orders?t=' + this.time).then(response => {
                     this.orders = response.data;
                 });
             },
-            beforeUnload(){
-                alert('Adeus');
-                axios.post('chat/webhook', { user: this.user });
-                Echo.leaveChannel('presence-chat');
+            setOnline(){
+                axios.get('set-online?t=' + this.time);
+            },
+            beforeUnload(e){
+                axios.get('set-offline?t=' + this.time);
             }
         }
     }
