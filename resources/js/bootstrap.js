@@ -50,6 +50,7 @@ window.Pusher = require('pusher-js');
 console.log(process.env.MIX_PUSHER_APP_KEY);
 
 window.Echo = new Echo({
+    authEndpoint : 'http://177.71.197.207/websockets-laravel-tests/broadcasting/auth', //only prod
     broadcaster: 'pusher',
     key: 'f064e552909017a4ecd2', //only prod
     // key: process.env.MIX_PUSHER_APP_KEY,
