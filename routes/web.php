@@ -36,3 +36,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('order/new', 'OrdersController@newOrder');
 
 Route::get('orders', 'OrdersController@index');
+Route::get('fetch-orders', 'OrdersController@fetchOrders');

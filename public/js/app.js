@@ -2011,31 +2011,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   data: function data() {
     return {
-      messages: [],
-      newMessage: '',
-      users: []
+      orders: []
     };
   },
   created: function created() {
+    var _this = this;
+
     this.fetchMessages();
     window.addEventListener('beforeunload', this.beforeUnload);
     Echo["private"]('new-order.' + this.user.id).listen('NewOrder', function (event) {
-      console.log(event); // this.messages.push(event.message);
+      console.log(event);
+
+      _this.orders.push(event.order);
     });
   },
   methods: {
     fetchMessages: function fetchMessages() {
-      var _this = this;
+      var _this2 = this;
 
-      axios.get('messages').then(function (response) {
-        _this.messages = response.data;
+      axios.get('fetch-orders').then(function (response) {
+        _this2.orders = response.data;
       });
     },
     beforeUnload: function beforeUnload() {
@@ -47765,7 +47764,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-8" }, [
+    _c("div", { staticClass: "col-4" }, [
       _c("div", { staticClass: "card card-default" }, [
         _c("div", { staticClass: "card-header" }, [_vm._v("Orders")]),
         _vm._v(" "),
@@ -47777,13 +47776,23 @@ var render = function() {
               staticClass: "list-unstyled",
               staticStyle: { height: "300px", "overflow-y": "scroll" }
             },
-            _vm._l(_vm.messages, function(message, index) {
+            _vm._l(_vm.orders, function(order, index) {
               return _c("li", { key: index, staticClass: "p-2" }, [
-                _c("strong", [_vm._v(_vm._s(message.user.name))]),
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(message.message) +
-                    "\n                    "
+                _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-primary",
+                    attrs: { role: "alert" }
+                  },
+                  [
+                    _c("strong", [
+                      _vm._v(
+                        _vm._s(order.description) +
+                          " - R$ " +
+                          _vm._s(order.value)
+                      )
+                    ])
+                  ]
                 )
               ])
             }),
@@ -47793,30 +47802,23 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-4" }, [
-      _c("div", { staticClass: "card card-default" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Active Users")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c(
-            "ul",
-            _vm._l(_vm.users, function(user, index) {
-              return _c("li", { key: index, staticClass: "py-2" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(user.name) +
-                    "\n                    "
-                )
-              ])
-            }),
-            0
-          )
-        ])
-      ])
-    ])
+    _vm._m(0)
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-8" }, [
+      _c("div", { staticClass: "card card-default" }, [
+        _c("div", { staticClass: "card-header" }, [_vm._v("Order Details")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

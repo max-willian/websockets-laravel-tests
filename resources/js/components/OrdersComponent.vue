@@ -1,28 +1,25 @@
 <template>
     <div class="row">
-        <div class="col-8">
+        <div class="col-4">
             <div class="card card-default">
                 <div class="card-header">Orders</div>
                 <div class="card-body p-0">
                     <ul class="list-unstyled" style="height: 300px; overflow-y: scroll" v-chat-scroll>
-                        <li class="p-2" v-for="(message, index) in messages" :key="index">
-                            <strong>{{ message.user.name }}</strong>
-                            {{ message.message }}
+                        <li class="p-2" v-for="(order, index) in orders" :key="index">
+                            <div class="alert alert-primary" role="alert">
+                                <strong>{{ order.description }} - R$ {{ order.value }}</strong>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-8">
             <div class="card card-default">
-                <div class="card-header">Active Users</div>
+                <div class="card-header">Order Details</div>
                 <div class="card-body">
-                    <ul>
-                        <li class="py-2" v-for="(user, index) in users" :key="index">
-                            {{ user.name }}
-                        </li>
-                    </ul>
+
                 </div>
             </div>
         </div>
@@ -35,9 +32,7 @@
 
         data() {
             return {
-                messages: [],
-                newMessage: '',
-                users: []
+                orders: []
             }
         },
         created(){
@@ -48,13 +43,13 @@
             Echo.private('new-order.' + this.user.id)
                 .listen('NewOrder', (event) => {
                     console.log(event);
-                    // this.messages.push(event.message);
+                    this.orders.push(event.order);
                 });
         },
         methods: {
             fetchMessages() {
-                axios.get('messages').then(response => {
-                    this.messages = response.data;
+                axios.get('fetch-orders').then(response => {
+                    this.orders = response.data;
                 });
             },
             beforeUnload(){

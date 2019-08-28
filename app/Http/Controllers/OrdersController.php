@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Events\NewOrder;
+use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware('auth')->except('newOrder');
     }
 
     public function index(){
@@ -27,5 +29,9 @@ class OrdersController extends Controller
         broadcast(new NewOrder($r));
 
         dd($r);
+    }
+
+    public function fetchOrders(){
+        echo Order::where('user_id', Auth::user()->id)->get();
     }
 }
