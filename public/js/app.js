@@ -2024,28 +2024,18 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
-
     this.fetchMessages();
     window.addEventListener('beforeunload', this.beforeUnload);
-    Echo.join('presence-chat').here(function (user) {
-      _this.users = user;
-    }).joining(function (user) {
-      _this.users.push(user);
-    }).leaving(function (user) {
-      _this.users = _this.users.filter(function (u) {
-        return u.id !== user.id;
-      });
-    }).listen('MessageSent', function (event) {
-      _this.messages.push(event.message);
+    Echo["private"]('new-order.' + this.user.id).listen('NewOrder', function (event) {
+      console.log(event); // this.messages.push(event.message);
     });
   },
   methods: {
     fetchMessages: function fetchMessages() {
-      var _this2 = this;
+      var _this = this;
 
       axios.get('messages').then(function (response) {
-        _this2.messages = response.data;
+        _this.messages = response.data;
       });
     },
     beforeUnload: function beforeUnload() {

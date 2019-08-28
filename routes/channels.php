@@ -19,3 +19,7 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 Broadcast::channel('presence-chat', function ($user) {
     return $user;
 });
+
+Broadcast::channel('new-order.{userId}', function ($user, $userId){
+    return $user->id == $userId;
+});

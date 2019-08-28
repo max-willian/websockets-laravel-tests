@@ -33,16 +33,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('order/new', function(Request $request){
-    $validated = $request->validate([
-        'user_id' => 'required',
-        'description' => 'required',
-        'value' => 'required',
-    ]);
-
-    $r =\App\Order::create($validated);
-
-    dd($r);
-});
+Route::get('order/new', 'OrdersController@newOrder');
 
 Route::get('orders', 'OrdersController@index');

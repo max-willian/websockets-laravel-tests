@@ -45,18 +45,10 @@
 
             window.addEventListener('beforeunload', this.beforeUnload);
 
-            Echo.join('presence-chat')
-                .here(user => {
-                    this.users = user;
-                })
-                .joining(user => {
-                    this.users.push(user);
-                })
-                .leaving(user => {
-                    this.users = this.users.filter(u => u.id !== user.id)
-                })
-                .listen('MessageSent', (event) => {
-                    this.messages.push(event.message);
+            Echo.private('new-order.' + this.user.id)
+                .listen('NewOrder', (event) => {
+                    console.log(event);
+                    // this.messages.push(event.message);
                 });
         },
         methods: {
